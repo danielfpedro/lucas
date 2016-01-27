@@ -11,7 +11,7 @@ Yanfly.Gab = Yanfly.Gab || {};
 
 //=============================================================================
  /*:
- * @plugindesc v1.02a The Gab Window functions as a window for random
+ * @plugindesc v1.03a The Gab Window functions as a window for random
  * jibber jabber that does not require a message window.
  * @author Yanfly Engine Plugins
  *
@@ -186,8 +186,9 @@ Yanfly.Gab = Yanfly.Gab || {};
  * Changelog
  * ============================================================================
  *
- * Version 1.03:
+ * Version 1.03a:
  * - Fixed a bug with GabSound that didn't load the proper sound filenames.
+ * - Fixed the time count for Gabs to not include text codes.
  *
  * Version 1.02a:
  * - Added functionality for battle gabs to be saved when going into other
@@ -586,7 +587,8 @@ Window_Gab.prototype.startCountdown = function() {
     this._graphicLoading = false;
     this.contentsOpacity = 255;
     this._showCount = Yanfly.Param.GabBaseTime;
-    this._showCount += this._text.length * Yanfly.Param.GabTimePerChar;
+    var text = this._text.replace(/\\(.*?)\[(.*?)\]/gi, '');
+    this._showCount += text.length * Yanfly.Param.GabTimePerChar;
 };
 
 Window_Gab.prototype.drawGabBackground = function() {
